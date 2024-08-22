@@ -1,6 +1,6 @@
 import { SettingFilled } from "@ant-design/icons";
 import React from "react";
-import "../assests/css/loader.module.css"
+import "../assests/css/loader.css"
 const Loader = () => {
   return (
     <div className="loader-overlay">

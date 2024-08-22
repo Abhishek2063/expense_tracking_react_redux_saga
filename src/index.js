@@ -9,6 +9,11 @@ import { BrowserRouter } from "react-router-dom";
 import Loader from "./compoenents/Loader";
 import { store } from "./store/store.factory";
 import AllRoutes from "./routing/route";
+import { message } from "antd";
+
+message.config({
+  maxCount: 1,
+});
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
