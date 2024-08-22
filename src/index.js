@@ -10,7 +10,7 @@ import Loader from "./compoenents/Loader";
 import { store } from "./store/store.factory";
 import AllRoutes from "./routing/route";
 import { message } from "antd";
-
+import "./assests/css/common.css"
 message.config({
   maxCount: 1,
 });
