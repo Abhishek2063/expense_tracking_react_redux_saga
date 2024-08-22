@@ -17,7 +17,7 @@ message.config({
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  // <React.StrictMode>
+  <React.StrictMode>
     <Suspense fallback={<Loader />}>
       <Provider store={store}>
         <BrowserRouter>
@@ -25,7 +25,7 @@ root.render(
         </BrowserRouter>
       </Provider>
     </Suspense>
-  // </React.StrictMode>
+  </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

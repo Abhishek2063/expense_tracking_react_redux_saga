@@ -1,9 +1,9 @@
 import React from "react";
 import { Card, Row, Col } from "react-bootstrap";
 import BackgroundImage from "../BackgroundImage";
-import RegistrationForm from "./RegistrationForm";
+import LoginForm from "./LoginForm";
 
-const RegistrationCard = ({ backgroundImage, logoImage, formProps }) => {
+const LoginCard = ({ backgroundImage, logoImage, formProps }) => {
   return (
     <Card className="registration-card">
       <Row className="g-0">
@@ -15,8 +15,8 @@ const RegistrationCard = ({ backgroundImage, logoImage, formProps }) => {
         </Col>
         <Col md={6} className="right-side">
           <Card.Body>
-            <h2 className="text-center mb-4">REGISTER</h2>
-            <RegistrationForm {...formProps} />
+            <h2 className="text-center mb-4">LOGIN</h2>
+            <LoginForm {...formProps} />
           </Card.Body>
         </Col>
       </Row>
@@ -24,4 +24,4 @@ const RegistrationCard = ({ backgroundImage, logoImage, formProps }) => {
   );
 };
 
-export default RegistrationCard;
+export default LoginCard;

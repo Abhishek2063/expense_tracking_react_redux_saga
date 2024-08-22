@@ -19,9 +19,9 @@ export const LoginRouteHandler = () => {
   const userLoggedIn = isLoggedIn();
 
   if (!userLoggedIn) {
-    return <Navigate to={LOGIN_APP_URL} replace />;
+    return <Navigate to={LOGIN_APP_URL}/>;
   } else {
-    return <Navigate to={DASHBOARD_APP_URL} replace />;
+    return <Navigate to={DASHBOARD_APP_URL}/>;
   }
 };
 
@@ -31,7 +31,7 @@ export const PublicRouteHandler = () => {
   if (!userLoggedIn) {
     return <Outlet />;
   } else {
-    return <Navigate to={DASHBOARD_APP_URL} replace />;
+    return <Navigate to={DASHBOARD_APP_URL}/>;
   }
 };
 
@@ -41,7 +41,7 @@ const PrivateRouteHandler = () => {
   if (userLoggedIn) {
     return <Outlet />;
   } else {
-    return <Navigate to={LOGIN_APP_URL} replace />;
+    return <Navigate to={LOGIN_APP_URL} />;
   }
 };
 
