@@ -14,7 +14,18 @@ export const createModuleResponse = (type, data) => ({ type, data });
 
 // UPDATE_MODULE_PERMISSION
 export const UPDATE_MODULE_PERMISSION = "UPDATE_MODULE_PERMISSION";
-export const updateModulePermission = (data) => ({ type: UPDATE_MODULE_PERMISSION, data });
-export const SUCCESS_UPDATE_MODULE_PERMISSION = "SUCCESS_UPDATE_MODULE_PERMISSION";
+export const updateModulePermission = (data) => ({
+  type: UPDATE_MODULE_PERMISSION,
+  data,
+});
+export const SUCCESS_UPDATE_MODULE_PERMISSION =
+  "SUCCESS_UPDATE_MODULE_PERMISSION";
 export const ERROR_UPDATE_MODULE_PERMISSION = "ERROR_UPDATE_MODULE_PERMISSION";
 export const updateModulePermissionResponse = (type, data) => ({ type, data });
+
+// UPDATE_MODULE
+export const UPDATE_MODULE = "UPDATE_MODULE";
+export const updateModule = (data) => ({ type: UPDATE_MODULE, data });
+export const SUCCESS_UPDATE_MODULE = "SUCCESS_UPDATE_MODULE";
+export const ERROR_UPDATE_MODULE = "ERROR_UPDATE_MODULE";
+export const updateModuleResponse = (type, data) => ({ type, data });

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Button, Table } from "react-bootstrap";
 import { Select, Switch, Modal, message } from "antd";
-import { PlusOutlined, AppstoreOutlined } from "@ant-design/icons";
+import { PlusOutlined, AppstoreOutlined, EditFilled } from "@ant-design/icons";
 import "../../assests/css/manage_module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getRole } from "../../redux/role/role.action";
@@ -12,6 +12,7 @@ import { getUserDetails } from "../../storage/user";
 import {
   createModule,
   getAllModule,
+  updateModule,
   updateModulePermission,
 } from "../../redux/module/module.action";
 import ModuleCreateModal from "../../compoenents/modals/manage_modules/ModuleCreateModal";
@@ -38,14 +39,15 @@ const ManageModules = () => {
   const dispatch = useDispatch();
   const userData = getUserDetails();
   const [showModal, setShowModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+
   const [loader, setLoader] = useState(false);
   const [roleList, setRoleList] = useState([]);
   const [modleListData, setModuleListData] = useState([]);
-  const { values, errors, handleChange, handleSubmit, reset } = useForm(
-    initialState,
-    validationRules
-  );
+  const { values, errors, handleChange, handleSubmit, reset, setValues } =
+    useForm(initialState, validationRules);
   const [selectedRoleID, setSelectedRoleId] = useState(null);
+  const [selectedModuleID, setSelectedModuleId] = useState(null);
 
   const handleAddModule = () => {
     setShowModal(true);
@@ -178,12 +180,15 @@ const ManageModules = () => {
   const updateModulePermissionData = useSelector(
     (state) => state.module.updateModulePermissionData
   );
-  const prevupdateModulePermissionData = usePrevious({ updateModulePermissionData });
+  const prevupdateModulePermissionData = usePrevious({
+    updateModulePermissionData,
+  });
 
   useEffect(() => {
     if (
       prevupdateModulePermissionData &&
-      prevupdateModulePermissionData.updateModulePermissionData !== updateModulePermissionData
+      prevupdateModulePermissionData.updateModulePermissionData !==
+        updateModulePermissionData
     ) {
       if (
         updateModulePermissionData &&
@@ -193,12 +198,71 @@ const ManageModules = () => {
         message.success(updateModulePermissionData.message);
         fetchAllModules(selectedRoleID);
       }
-      if (updateModulePermissionData && updateModulePermissionData.success === false) {
+      if (
+        updateModulePermissionData &&
+        updateModulePermissionData.success === false
+      ) {
         setLoader(false);
         message.error(updateModulePermissionData.message);
       }
     } // eslint-disable-next-line
   }, [updateModulePermissionData, prevupdateModulePermissionData]);
+
+  const handleEditModal = (selectedModuleData) => {
+    const initialState = {
+      name: selectedModuleData?.name,
+      link_name: selectedModuleData?.link_name,
+      description: selectedModuleData?.description,
+    };
+    setValues(initialState);
+    setSelectedModuleId(selectedModuleData?.id);
+    setShowEditModal(true);
+  };
+
+  const handleCloseEditModal = () => {
+    setShowEditModal(false);
+    setSelectedModuleId(null);
+    reset();
+  };
+  const onUpdateSubmit = (formData) => {
+    setLoader(true);
+    const data = {
+      name: formData.name.trim().toLowerCase(),
+      link_name: formData.link_name.trim(),
+      description: formData.description.trim(),
+      module_id: selectedModuleID,
+    };
+    setShowEditModal(false);
+
+    dispatch(updateModule(data));
+  };
+
+  const updateModuleData = useSelector(
+    (state) => state.module.updateModuleData
+  );
+  const prevupdateModuleData = usePrevious({
+    updateModuleData,
+  });
+
+  useEffect(() => {
+    if (
+      prevupdateModuleData &&
+      prevupdateModuleData.updateModuleData !== updateModuleData
+    ) {
+      if (
+        updateModuleData &&
+        _.has(updateModuleData, "data") &&
+        updateModuleData.success === true
+      ) {
+        message.success(updateModuleData.message);
+        fetchAllModules(selectedRoleID);
+      }
+      if (updateModuleData && updateModuleData.success === false) {
+        setLoader(false);
+        message.error(updateModuleData.message);
+      }
+    } // eslint-disable-next-line
+  }, [updateModuleData, prevupdateModuleData]);
 
   return (
     <>
@@ -248,6 +312,7 @@ const ManageModules = () => {
                     <th>Name</th>
                     <th>Link</th>
                     <th>Permission</th>
+                    <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -260,8 +325,15 @@ const ManageModules = () => {
                         <td>
                           <Switch
                             checked={module?.has_permission}
-                            onChange={(value) => handleChangePermission(value,module.id)}
+                            onChange={(value) =>
+                              handleChangePermission(value, module.id)
+                            }
                           />
+                        </td>
+                        <td>
+                          <Button onClick={() => handleEditModal(module)}>
+                            <EditFilled />
+                          </Button>
                         </td>
                       </tr>
                     ))
@@ -282,6 +354,15 @@ const ManageModules = () => {
           errors={errors}
           handleChange={handleChange}
           handleSubmit={handleSubmit(onSubmit)}
+        />
+        <ModuleCreateModal
+          modal_title="Edit Module"
+          modalOpen={showEditModal}
+          handleClose={handleCloseEditModal}
+          values={values}
+          errors={errors}
+          handleChange={handleChange}
+          handleSubmit={handleSubmit(onUpdateSubmit)}
         />
       </Container>
       {loader && <Loader />}

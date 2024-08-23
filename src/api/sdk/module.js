@@ -29,3 +29,13 @@ export async function updateModulePermissionApi(data) {
     data: userData,
   });
 }
+
+export async function updateModuleApi(data) {
+  let userData = data.data;
+
+  return request({
+    url: `${MODULE_API_URL}/${userData.module_id}`,
+    method: "put",
+    data: userData,
+  });
+}

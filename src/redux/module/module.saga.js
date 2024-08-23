@@ -3,21 +3,26 @@ import _ from "lodash";
 import {
   createModuleApi,
   getModuleApi,
+  updateModuleApi,
   updateModulePermissionApi,
 } from "../../api/sdk/module";
 import {
   CREATE_MODULE,
   ERROR_CREATE_MODULE,
   ERROR_GET_ALL_MODULE,
+  ERROR_UPDATE_MODULE,
   ERROR_UPDATE_MODULE_PERMISSION,
   GET_ALL_MODULE,
   SUCCESS_CREATE_MODULE,
   SUCCESS_GET_ALL_MODULE,
+  SUCCESS_UPDATE_MODULE,
   SUCCESS_UPDATE_MODULE_PERMISSION,
+  UPDATE_MODULE,
   UPDATE_MODULE_PERMISSION,
   createModuleResponse,
   getAllModuleResponse,
   updateModulePermissionResponse,
+  updateModuleResponse,
 } from "./module.action";
 
 // getAllModule
@@ -67,4 +72,17 @@ function* updateModulePermissionRequest(data) {
 }
 export function* updateModulePermissionWatcher() {
   yield takeLatest(UPDATE_MODULE_PERMISSION, updateModulePermissionRequest);
+}
+
+// updateModule
+function* updateModuleRequest(data) {
+  let getData = yield updateModuleApi(data);
+  if (getData.success && _.has(getData, "data.data")) {
+    yield put(updateModuleResponse(SUCCESS_UPDATE_MODULE, getData.data));
+  } else {
+    yield put(updateModuleResponse(ERROR_UPDATE_MODULE, getData.data));
+  }
+}
+export function* updateModuleWatcher() {
+  yield takeLatest(UPDATE_MODULE, updateModuleRequest);
 }

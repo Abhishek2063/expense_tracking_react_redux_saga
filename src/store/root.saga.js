@@ -6,6 +6,7 @@ import {
   createModuleWatcher,
   getAllModuleWatcher,
   updateModulePermissionWatcher,
+  updateModuleWatcher,
 } from "../redux/module/module.saga";
 
 export function* rootSaga() {
@@ -16,5 +17,6 @@ export function* rootSaga() {
     getAllModuleWatcher(),
     createModuleWatcher(),
     updateModulePermissionWatcher(),
+    updateModuleWatcher(),
   ]);
 }
