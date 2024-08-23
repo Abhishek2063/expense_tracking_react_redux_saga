@@ -8,7 +8,7 @@ export let config = () => {
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Headers": "*",
 
-      Authorization: `${getToken() ? getToken() : getVerifyToken()}`,
+      Authorization: `Bearer ${getToken() ? getToken() : getVerifyToken()}`,
     },
   };
   withOutAuthconfig = {
@@ -16,5 +16,6 @@ export let config = () => {
       "Content-Type": "application/json",
     },
   };
+
   return getToken() || getVerifyToken() ? authConfig : withOutAuthconfig;
 };

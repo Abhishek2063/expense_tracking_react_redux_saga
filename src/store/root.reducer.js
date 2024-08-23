@@ -1,12 +1,11 @@
-
-import { combineReducers } from 'redux';
-import { signupReducer } from '../redux/signup/signup.reducer';
-import { loginReducer } from '../redux/signin/signin.reducer';
+import { combineReducers } from "redux";
+import { signupReducer } from "../redux/signup/signup.reducer";
+import { loginReducer } from "../redux/signin/signin.reducer";
+import { roleReducer } from "../redux/role/role.reducer";
 export const appReducer = combineReducers({
   signup: signupReducer,
   login: loginReducer,
-
-
+  role: roleReducer,
 });
 export const rootReducer = (state, action) => {
   if (action.type === "USER_LOGOUT") {

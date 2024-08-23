@@ -4,11 +4,12 @@ import { Avatar } from 'antd';
 import { MenuOutlined, UserOutlined, LogoutOutlined } from '@ant-design/icons';
 import '../assests/css/header.css';
 import logoImage from "../assests/images/Untitled_design__1_-removebg-preview.png"
+import { DASHBOARD_APP_URL } from '../utils/app_route_list';
 const Header = ({ toggleSidebar }) => {
   return (
     <Navbar bg="light" expand="lg" className="header">
       <Container fluid>
-        <Navbar.Brand href="/">
+        <Navbar.Brand href={DASHBOARD_APP_URL}>
           <img src={logoImage} alt="Logo" height="50" width="200"/>
         </Navbar.Brand>
         <Nav className="ms-auto">

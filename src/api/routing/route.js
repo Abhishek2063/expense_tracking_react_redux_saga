@@ -4,4 +4,6 @@ const URL = (uri) => `${API_URL}${uri}`;
 
 export const REGISTRATION = URL("/api/users");
 export const LOGIN = URL("/api/auth/login");
+export const GET_ROLE_API_URL = URL("/api/role");
+
 

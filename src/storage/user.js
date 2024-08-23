@@ -1,36 +1,72 @@
+// Helper function to set a cookie
+function setCookie(name, value, days) {
+  let expires = "";
+  if (days) {
+    const date = new Date();
+    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+    expires = "; expires=" + date.toUTCString();
+  }
+  document.cookie = name + "=" + (value || "") + expires + "; path=/";
+}
+
+// Helper function to get a cookie
+function getCookie(name) {
+  const nameEQ = name + "=";
+  const ca = document.cookie.split(';');
+  for (let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+    if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+  }
+  return null;
+}
+
+// Helper function to delete a cookie
+function eraseCookie(name) {
+  document.cookie = name + '=; Max-Age=-99999999;';
+}
+
+// Set user details in a cookie
 export function setUserDetails(data) {
-    sessionStorage.setItem("typeData", btoa(JSON.stringify(data)));
+  const encodedData = btoa(JSON.stringify(data));
+  setCookie("typeData", encodedData, 7); // 7 days expiration (adjust as needed)
+}
+
+// Clear user details cookie
+export function clearUserDetails() {
+  eraseCookie("typeData");
+}
+
+// Get user details from cookie
+export const getUserDetails = () => {
+  const encodedData = getCookie("typeData");
+  if (!encodedData) {
+    return "";
   }
-  
-  export function clearUserDetails() {
-    sessionStorage.setItem("typeData", null);
+  try {
+    const userData = JSON.parse(atob(encodedData));
+    return userData;
+  } catch (e) {
+    return "";
   }
-  
-  export const getUserDetails = () => {
-    if (sessionStorage.getItem("typeData") === null) {
-      return "";
-    }
-    try {
-      const userData = JSON.parse(atob(sessionStorage.getItem("typeData")));
-      return userData;
-    } catch (e) {
-      return;
-    }
-  };
-  
-  export function setEntityData(data) {
-    sessionStorage.setItem("entityData", btoa(JSON.stringify(data)));
+};
+
+// Set entity data in a cookie
+export function setEntityData(data) {
+  const encodedData = btoa(JSON.stringify(data));
+  setCookie("entityData", encodedData, 7); // 7 days expiration (adjust as needed)
+}
+
+// Get entity data from cookie
+export const getEntityData = () => {
+  const encodedData = getCookie("entityData");
+  if (!encodedData) {
+    return "";
   }
-  
-  export const getEntityData = () => {
-    if (sessionStorage.getItem("entityData") === null) {
-      return "";
-    }
-    try {
-      const userData = JSON.parse(atob(sessionStorage.getItem("entityData")));
-      return userData;
-    } catch (e) {
-      return;
-    }
-  };
-  
+  try {
+    const entityData = JSON.parse(atob(encodedData));
+    return entityData;
+  } catch (e) {
+    return "";
+  }
+}

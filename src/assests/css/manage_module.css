@@ -1,0 +1,15 @@
+.manage-modules h2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .manage-modules .table-responsive {
+    overflow-x: auto;
+  }
+  
+  @media (max-width: 768px) {
+    .manage-modules .text-md-end {
+      text-align: left !important;
+    }
+  }
