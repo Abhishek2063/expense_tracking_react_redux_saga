@@ -12,7 +12,6 @@ export const request = async (config) => {
     ...defaultConfig(),
     ...config,
   };
-
   let response;
   try {
     response = await axios.request(requestData);

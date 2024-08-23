@@ -8,7 +8,8 @@ import { getRole } from "../../redux/role/role.action";
 import { usePrevious } from "../../utils/custom_validation";
 import Loader from "../../compoenents/Loader";
 import _ from "lodash";
-import { getUserDetails } from '../../storage/user';
+import { getUserDetails } from "../../storage/user";
+import { getAllModule } from "../../redux/module/module.action";
 
 const { Option } = Select;
 
@@ -16,25 +17,11 @@ const ManageModules = () => {
   const [showModal, setShowModal] = useState(false);
   const [loader, setLoader] = useState(false);
   const [roleList, setRoleList] = useState([]);
+  const [modleListData, setModuleListData] = useState([]);
+
   const dispatch = useDispatch();
-  const userData = getUserDetails()
-  const modules = [
-    {
-      id: 1,
-      name: "Dashboard",
-      link: "/dashboard",
-      icon: "DashboardOutlined",
-      permission: true,
-    },
-    {
-      id: 2,
-      name: "Users",
-      link: "/users",
-      icon: "UserOutlined",
-      permission: false,
-    },
-    // Add more modules as needed
-  ];
+  const userData = getUserDetails();
+
 
   const handleAddModule = () => {
     setShowModal(true);
@@ -45,8 +32,20 @@ const ManageModules = () => {
     dispatch(getRole());
   };
 
+  const fetchAllModules = async (role_id) => {
+    setLoader(true);
+    dispatch(
+      getAllModule({
+        role_id: role_id,
+      })
+    );
+  };
+
   useEffect(() => {
     fetchAllRoles();
+    if (userData) {
+      fetchAllModules(userData?.role?.id);
+    }
     // eslint-disable-next-line
   }, []);
 
@@ -71,6 +70,32 @@ const ManageModules = () => {
     } // eslint-disable-next-line
   }, [getRoleData, prevgetRoleData]);
 
+  const getAllModuleData = useSelector(
+    (state) => state.module.getAllModuleData
+  );
+  const prevgetAllModuleData = usePrevious({ getAllModuleData });
+
+  useEffect(() => {
+    if (
+      prevgetAllModuleData &&
+      prevgetAllModuleData.getAllModuleData !== getAllModuleData
+    ) {
+      if (
+        getAllModuleData &&
+        _.has(getAllModuleData, "data") &&
+        getAllModuleData.success === true
+      ) {
+        message.success(getAllModuleData.message);
+        setModuleListData(getAllModuleData?.data?.modules);
+        setLoader(false);
+      }
+      if (getAllModuleData && getAllModuleData.success === false) {
+        setLoader(false);
+        message.error(getAllModuleData.message);
+      }
+    } // eslint-disable-next-line
+  }, [getAllModuleData, prevgetAllModuleData]);
+
   return (
     <>
       <Container fluid className="manage-modules">
@@ -84,7 +109,7 @@ const ManageModules = () => {
 
         <Row className="mb-4">
           <Col md={6} className="mb-3 mb-md-0">
-          <Select defaultValue={userData?.role?.id} style={{ width: "100%" }}>
+            <Select defaultValue={userData?.role?.id} style={{ width: "100%" }}>
               {roleList.length > 0 ? (
                 roleList.map((data) => (
                   <Option value={data?.id} key={data?.id}>
@@ -119,17 +144,17 @@ const ManageModules = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {modules.map((module, index) => (
+                  {modleListData && modleListData.length > 0 ?modleListData.map((module, index) => (
                     <tr key={module.id}>
                       <td>{index + 1}</td>
-                      <td>{module.name}</td>
-                      <td>{module.link}</td>
-                      <td>{module.icon}</td>
+                      <td>{module?.name}</td>
+                      <td>{module?.link}</td>
+                      <td>{module?.icon}</td>
                       <td>
-                        <Switch checked={module.permission} />
+                        <Switch checked={module?.permission} />
                       </td>
                     </tr>
-                  ))}
+                  )) : <tr className="text-center">No Module List</tr>}
                 </tbody>
               </Table>
             </div>
