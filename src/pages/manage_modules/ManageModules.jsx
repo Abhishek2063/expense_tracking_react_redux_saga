@@ -5,23 +5,47 @@ import { PlusOutlined, AppstoreOutlined } from "@ant-design/icons";
 import "../../assests/css/manage_module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getRole } from "../../redux/role/role.action";
-import { usePrevious } from "../../utils/custom_validation";
+import { fieldValidator, usePrevious } from "../../utils/custom_validation";
 import Loader from "../../compoenents/Loader";
 import _ from "lodash";
 import { getUserDetails } from "../../storage/user";
-import { getAllModule } from "../../redux/module/module.action";
+import {
+  createModule,
+  getAllModule,
+  updateModulePermission,
+} from "../../redux/module/module.action";
+import ModuleCreateModal from "../../compoenents/modals/manage_modules/ModuleCreateModal";
+import useForm from "../../hooks/useForm";
 
 const { Option } = Select;
+let initialState = {
+  name: "",
+  link_name: "",
+  description: "",
+};
+
+let validationRules = {
+  name: (value) => fieldValidator("name", value, "alphabetics", 20, 3).errorMsg,
+  link_name: (value) =>
+    fieldValidator("link_name", value, "string", 20, 3).errorMsg,
+  description: (value) =>
+    value
+      ? fieldValidator("description", value, "alphabetics", 255, 3).errorMsg
+      : null,
+};
 
 const ManageModules = () => {
+  const dispatch = useDispatch();
+  const userData = getUserDetails();
   const [showModal, setShowModal] = useState(false);
   const [loader, setLoader] = useState(false);
   const [roleList, setRoleList] = useState([]);
   const [modleListData, setModuleListData] = useState([]);
-
-  const dispatch = useDispatch();
-  const userData = getUserDetails();
-
+  const { values, errors, handleChange, handleSubmit, reset } = useForm(
+    initialState,
+    validationRules
+  );
+  const [selectedRoleID, setSelectedRoleId] = useState(null);
 
   const handleAddModule = () => {
     setShowModal(true);
@@ -33,6 +57,7 @@ const ManageModules = () => {
   };
 
   const fetchAllModules = async (role_id) => {
+    setSelectedRoleId(role_id);
     setLoader(true);
     dispatch(
       getAllModule({
@@ -96,6 +121,85 @@ const ManageModules = () => {
     } // eslint-disable-next-line
   }, [getAllModuleData, prevgetAllModuleData]);
 
+  const onSubmit = (formData) => {
+    setLoader(true);
+    const data = {
+      name: formData.name.trim().toLowerCase(),
+      link_name: formData.link_name.trim(),
+      description: formData.description.trim(),
+    };
+    dispatch(createModule(data));
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    reset();
+  };
+
+  const createModuleData = useSelector(
+    (state) => state.module.createModuleData
+  );
+  const prevcreateModuleData = usePrevious({ createModuleData });
+
+  useEffect(() => {
+    if (
+      prevcreateModuleData &&
+      prevcreateModuleData.createModuleData !== createModuleData
+    ) {
+      if (
+        createModuleData &&
+        _.has(createModuleData, "data") &&
+        createModuleData.success === true
+      ) {
+        message.success(createModuleData.message);
+        fetchAllModules(selectedRoleID);
+      }
+      if (createModuleData && createModuleData.success === false) {
+        setLoader(false);
+        message.error(createModuleData.message);
+      }
+    } // eslint-disable-next-line
+  }, [createModuleData, prevcreateModuleData]);
+
+  const handleSelectChange = (value) => {
+    fetchAllModules(value);
+  };
+
+  const handleChangePermission = (value, module_id) => {
+    dispatch(
+      updateModulePermission({
+        role_id: parseInt(selectedRoleID),
+        module_id: parseInt(module_id),
+        permission: value,
+      })
+    );
+  };
+
+  const updateModulePermissionData = useSelector(
+    (state) => state.module.updateModulePermissionData
+  );
+  const prevupdateModulePermissionData = usePrevious({ updateModulePermissionData });
+
+  useEffect(() => {
+    if (
+      prevupdateModulePermissionData &&
+      prevupdateModulePermissionData.updateModulePermissionData !== updateModulePermissionData
+    ) {
+      if (
+        updateModulePermissionData &&
+        _.has(updateModulePermissionData, "data") &&
+        updateModulePermissionData.success === true
+      ) {
+        message.success(updateModulePermissionData.message);
+        fetchAllModules(selectedRoleID);
+      }
+      if (updateModulePermissionData && updateModulePermissionData.success === false) {
+        setLoader(false);
+        message.error(updateModulePermissionData.message);
+      }
+    } // eslint-disable-next-line
+  }, [updateModulePermissionData, prevupdateModulePermissionData]);
+
   return (
     <>
       <Container fluid className="manage-modules">
@@ -109,7 +213,11 @@ const ManageModules = () => {
 
         <Row className="mb-4">
           <Col md={6} className="mb-3 mb-md-0">
-            <Select defaultValue={userData?.role?.id} style={{ width: "100%" }}>
+            <Select
+              defaultValue={userData?.role?.id}
+              style={{ width: "100%" }}
+              onSelect={handleSelectChange}
+            >
               {roleList.length > 0 ? (
                 roleList.map((data) => (
                   <Option value={data?.id} key={data?.id}>
@@ -139,49 +247,42 @@ const ManageModules = () => {
                     <th>Sr. No</th>
                     <th>Name</th>
                     <th>Link</th>
-                    <th>Icon Name</th>
                     <th>Permission</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {modleListData && modleListData.length > 0 ?modleListData.map((module, index) => (
-                    <tr key={module.id}>
-                      <td>{index + 1}</td>
-                      <td>{module?.name}</td>
-                      <td>{module?.link}</td>
-                      <td>{module?.icon}</td>
-                      <td>
-                        <Switch checked={module?.permission} />
-                      </td>
-                    </tr>
-                  )) : <tr className="text-center">No Module List</tr>}
+                  {modleListData && modleListData.length > 0 ? (
+                    modleListData.map((module, index) => (
+                      <tr key={module.id}>
+                        <td>{index + 1}</td>
+                        <td>{module?.name}</td>
+                        <td>{module?.link_name}</td>
+                        <td>
+                          <Switch
+                            checked={module?.has_permission}
+                            onChange={(value) => handleChangePermission(value,module.id)}
+                          />
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr className="text-center">No Module List</tr>
+                  )}
                 </tbody>
               </Table>
             </div>
           </Col>
         </Row>
 
-        {/* Common Modal */}
-        <Modal
-          title="Add Module"
-          visible={showModal}
-          onCancel={() => setShowModal(false)}
-          footer={[
-            <Button key="cancel" onClick={() => setShowModal(false)}>
-              Cancel
-            </Button>,
-            <Button
-              key="submit"
-              type="primary"
-              onClick={() => setShowModal(false)}
-            >
-              Submit
-            </Button>,
-          ]}
-        >
-          {/* Add your form fields here */}
-          <p>Module form fields go here</p>
-        </Modal>
+        <ModuleCreateModal
+          modal_title="Add Module"
+          modalOpen={showModal}
+          handleClose={handleCloseModal}
+          values={values}
+          errors={errors}
+          handleChange={handleChange}
+          handleSubmit={handleSubmit(onSubmit)}
+        />
       </Container>
       {loader && <Loader />}
     </>

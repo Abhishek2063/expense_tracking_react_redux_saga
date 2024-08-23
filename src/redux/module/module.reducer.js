@@ -1,4 +1,11 @@
-import { ERROR_GET_ALL_MODULE, SUCCESS_GET_ALL_MODULE } from "./module.action";
+import {
+  ERROR_CREATE_MODULE,
+  ERROR_GET_ALL_MODULE,
+  ERROR_UPDATE_MODULE_PERMISSION,
+  SUCCESS_CREATE_MODULE,
+  SUCCESS_GET_ALL_MODULE,
+  SUCCESS_UPDATE_MODULE_PERMISSION,
+} from "./module.action";
 import { DEFAULT_STATE } from "./module.state";
 
 export const moduleReducer = (
@@ -15,6 +22,20 @@ export const moduleReducer = (
     case ERROR_GET_ALL_MODULE:
       const errorgetAllModuleData = action.data;
       return { ...state, getAllModuleData: errorgetAllModuleData };
+
+    case SUCCESS_CREATE_MODULE:
+      const createModuleData = action.data;
+      return { ...state, createModuleData };
+    case ERROR_CREATE_MODULE:
+      const errorcreateModuleData = action.data;
+      return { ...state, createModuleData: errorcreateModuleData };
+
+    case SUCCESS_UPDATE_MODULE_PERMISSION:
+      const updateModulePermissionData = action.data;
+      return { ...state, updateModulePermissionData };
+    case ERROR_UPDATE_MODULE_PERMISSION:
+      const errorupdateModulePermissionData = action.data;
+      return { ...state, updateModulePermissionData: errorupdateModulePermissionData };
 
     default:
       return state;
