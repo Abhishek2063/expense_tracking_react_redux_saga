@@ -3,15 +3,28 @@ import Header from "../compoenents/Header";
 import Footer from "../compoenents/Footer";
 import { isLoggedIn } from "./authServices";
 import { DASHBOARD_APP_URL, LOGIN_APP_URL } from "../utils/app_route_list";
+import { useState } from "react";
+import "../assests/css/template.css"
+import Sidebar from "../compoenents/Sidebar";
 
 export const Template = ({ children }) => {
-  return (
-    <>
-      <Header />
-      <div className="body-content">{children}</div>
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
+
+  return (
+    <div className="template-container">
+      <Header toggleSidebar={toggleSidebar} />
+      <div className="content-wrapper">
+        <Sidebar isOpen={sidebarOpen} />
+        <main className="main-content">
+          {children}
+        </main>
+      </div>
       <Footer />
-    </>
+    </div>
   );
 };
 

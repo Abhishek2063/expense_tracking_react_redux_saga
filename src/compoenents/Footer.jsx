@@ -1,9 +1,16 @@
-import React from 'react'
+import React from 'react';
+import '../assests/css/footer.css';
 
 const Footer = () => {
-  return (
-    <div>Footer</div>
-  )
-}
+  const currentYear = new Date().getFullYear();
 
-export default Footer
+  return (
+    <footer className="footer">
+      <div className="container">
+        <p>&copy; {currentYear} BudgetKeeper. All rights reserved.</p>
+      </div>
+    </footer>
+  );
+};
+
+export default Footer;

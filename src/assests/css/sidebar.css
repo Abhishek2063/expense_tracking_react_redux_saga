@@ -1,0 +1,23 @@
+.sidebar {
+    width: 250px;
+    background-color: #001529;
+    transition: all 0.3s;
+  }
+  
+  .sidebar.open {
+    transform: translateX(0);
+  }
+  
+  @media (max-width: 991px) {
+    .sidebar {
+      position: fixed;
+      top: 56px;
+      left: -250px;
+      height: calc(100vh - 56px);
+      z-index: 1000;
+    }
+  
+    .sidebar.open {
+      left: 0;
+    }
+  }
