@@ -8,7 +8,7 @@ const Pagination = ({ current, total, pageSize, onChange }) => (
     pageSize={pageSize}
     onChange={onChange}
     showSizeChanger={false}
-    showQuickJumper
+    showQuickJumper = {false}
   />
 );
 

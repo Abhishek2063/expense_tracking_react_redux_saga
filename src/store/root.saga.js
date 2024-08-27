@@ -13,6 +13,12 @@ import {
   updateModulePermissionWatcher,
   updateModuleWatcher,
 } from "../redux/module/module.saga";
+import {
+  deleteUserWatcher,
+  getAllUserWatcher,
+  passwordUpdateUserWatcher,
+  updateUserWatcher,
+} from "../redux/user/user.saga";
 
 export function* rootSaga() {
   yield all([
@@ -26,5 +32,9 @@ export function* rootSaga() {
     createRoleWatcher(),
     updateRoleWatcher(),
     deleteRoleWatcher(),
+    getAllUserWatcher(),
+    updateUserWatcher(),
+    deleteUserWatcher(),
+    passwordUpdateUserWatcher(),
   ]);
 }

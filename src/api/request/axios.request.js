@@ -15,7 +15,6 @@ export const request = async (config) => {
   let response;
   try {
     response = await axios.request(requestData);
-    console.log(response?.data?.status_code ,"response?.data?.status_code ------------");
     if (response?.data?.status_code === 401) {
       removeLocalData();
       <Navigate to={LOGIN_APP_URL} />;

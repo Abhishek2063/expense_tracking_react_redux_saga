@@ -7,6 +7,7 @@ import {
   DASHBOARD_APP_URL,
   MANAGE_MODULE_APP_URL,
   MANAGE_ROLE_APP_URL,
+  MANAGE_USER_APP_URL,
 } from "../utils/app_route_list";
 const Sidebar = ({ isOpen }) => {
   return (
@@ -20,6 +21,9 @@ const Sidebar = ({ isOpen }) => {
         </Menu.Item>
         <Menu.Item key="manage_role" icon={<AppstoreOutlined />}>
           <Link to={MANAGE_ROLE_APP_URL}>Manage Roles</Link>
+        </Menu.Item>
+        <Menu.Item key="manage_user" icon={<AppstoreOutlined />}>
+          <Link to={MANAGE_USER_APP_URL}>Manage Users</Link>
         </Menu.Item>
       </Menu>
     </div>

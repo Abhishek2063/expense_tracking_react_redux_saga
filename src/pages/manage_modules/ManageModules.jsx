@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Button, Table } from "react-bootstrap";
-import { Select, Switch, Modal, message } from "antd";
+import { Select, Switch, message } from "antd";
 import { PlusOutlined, AppstoreOutlined, EditFilled } from "@ant-design/icons";
 import "../../assests/css/manage_module.css";
 import { useDispatch, useSelector } from "react-redux";

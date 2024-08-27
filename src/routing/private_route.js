@@ -3,6 +3,7 @@ import {
   DASHBOARD_APP_URL,
   MANAGE_MODULE_APP_URL,
   MANAGE_ROLE_APP_URL,
+  MANAGE_USER_APP_URL
 } from "../utils/app_route_list";
 
 export const DASHBOARD_APP_COMPONENT = React.lazy(() =>
@@ -13,6 +14,9 @@ export const MANAGE_MODULE_APP_COMPONENT = React.lazy(() =>
 );
 export const MANAGE_ROLE_APP_COMPONENT = React.lazy(() =>
   import("../pages/manage_role/ManageRole")
+);
+export const MANAGE_USER_APP_COMPONENT = React.lazy(() =>
+  import("../pages/manage_users/ManageUser")
 );
 
 export const PrivateRoutes = [
@@ -28,5 +32,9 @@ export const PrivateRoutes = [
   {
     path: MANAGE_ROLE_APP_URL,
     component: <MANAGE_ROLE_APP_COMPONENT />,
+  },
+  {
+    path: MANAGE_USER_APP_URL,
+    component: <MANAGE_USER_APP_COMPONENT />,
   },
 ];

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { message } from "antd";
 import { AppstoreOutlined } from "@ant-design/icons";
-import "../../assests/css/manage_module.css";
+import "../../assests/css/manage_role.css";
 import { useDispatch, useSelector } from "react-redux";
 import { fieldValidator, usePrevious } from "../../utils/custom_validation";
 import Loader from "../../compoenents/Loader";
@@ -13,8 +13,8 @@ import {
   getRole,
   updateRole,
 } from "../../redux/role/role.action";
-import FilterControls from "../../compoenents/manage_roles/FilterControls";
-import AddRoleButton from "../../compoenents/manage_roles/AddRoleButton";
+import FilterControls from "../../compoenents/FilterControls";
+import AddButton from "../../compoenents/AddButton";
 import RoleList from "../../compoenents/manage_roles/RoleList";
 import Pagination from "../../compoenents/Pagination";
 import RoleCreateModal from "../../compoenents/modals/manage_role/RoleCreateModal";
@@ -287,7 +287,7 @@ const ManageRole = () => {
             />
           </Col>
           <Col md={6} className="text-md-end">
-            <AddRoleButton onClick={handleAddRole} />
+            <AddButton onClick={handleAddRole} title="Add Role"/>
           </Col>
         </Row>
 
