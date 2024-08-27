@@ -4,6 +4,7 @@ import {
   DASHBOARD_APP_URL,
   LOGIN_APP_URL,
   MANAGE_MODULE_APP_URL,
+  MANAGE_ROLE_APP_URL,
   REGISTER_APP_URL,
 } from "./app_route_list";
 
@@ -13,7 +14,13 @@ const Empty = () => {
 
   //   const path = URL.split("/");
   //   const id = path[2];
-  var matches = [LOGIN_APP_URL, REGISTER_APP_URL, DASHBOARD_APP_URL, MANAGE_MODULE_APP_URL];
+  var matches = [
+    LOGIN_APP_URL,
+    REGISTER_APP_URL,
+    DASHBOARD_APP_URL,
+    MANAGE_MODULE_APP_URL,
+    MANAGE_ROLE_APP_URL,
+  ];
 
   if (~matches.indexOf(location.pathname)) {
     return <div></div>;

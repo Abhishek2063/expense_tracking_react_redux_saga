@@ -23,6 +23,7 @@ export const request = async (config) => {
 };
 
 function createResponseFromAxiosError(error) {
+  console.log(error,"error");
   // handle  error
   let status, message, data;
 

@@ -37,7 +37,7 @@ export function getToken() {
 export function setToken(token) {
   if (typeof window !== "undefined") {
     eraseCookie("ACCESS_TOKEN");
-    setCookie("ACCESS_TOKEN", token, 7); // 7 days expiration (adjust as needed)
+    setCookie("ACCESS_TOKEN", token, 1); // 1 days expiration (adjust as needed)
     return token;
   }
 }
@@ -63,7 +63,7 @@ export function getVerifyToken() {
 export function setVerifyToken(token) {
   if (typeof window !== "undefined") {
     eraseCookie("VERIFY_TOKEN");
-    setCookie("VERIFY_TOKEN", token, 7); // 7 days expiration (adjust as needed)
+    setCookie("VERIFY_TOKEN", token, 1); // 1 days expiration (adjust as needed)
     return token;
   }
 }

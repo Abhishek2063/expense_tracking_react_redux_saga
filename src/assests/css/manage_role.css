@@ -1,0 +1,15 @@
+.manage-role h2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .manage-role .table-responsive {
+    overflow-x: auto;
+  }
+  
+  @media (max-width: 768px) {
+    .manage-role .text-md-end {
+      text-align: left !important;
+    }
+  }
