@@ -16,3 +16,8 @@ body {
     background-color: #f5f5f5;
     visibility: visible !important;
 }
+
+.ant-avatar {
+    width: 40px;
+    height: 40px;
+}
