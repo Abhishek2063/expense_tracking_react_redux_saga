@@ -128,7 +128,7 @@ const ManageModules = () => {
     const data = {
       name: formData.name.trim().toLowerCase(),
       link_name: formData.link_name.trim(),
-      description: formData.description.trim(),
+      description: formData.description.trim() || null,
     };
     dispatch(createModule(data));
   };
@@ -229,7 +229,7 @@ const ManageModules = () => {
     const data = {
       name: formData.name.trim().toLowerCase(),
       link_name: formData.link_name.trim(),
-      description: formData.description.trim(),
+      description: formData.description.trim() || null,
       module_id: selectedModuleID,
     };
     setShowEditModal(false);

@@ -15,6 +15,11 @@ export const request = async (config) => {
   let response;
   try {
     response = await axios.request(requestData);
+    console.log(response?.data?.status_code ,"response?.data?.status_code ------------");
+    if (response?.data?.status_code === 401) {
+      removeLocalData();
+      <Navigate to={LOGIN_APP_URL} />;
+    }
   } catch (error) {
     return createResponseFromAxiosError(error);
   }
@@ -23,14 +28,13 @@ export const request = async (config) => {
 };
 
 function createResponseFromAxiosError(error) {
-  console.log(error,"error");
   // handle  error
   let status, message, data;
 
   if (error.response) {
     if (error.response.status === 401) {
       removeLocalData();
-      <Navigate to={LOGIN_APP_URL}/>
+      <Navigate to={LOGIN_APP_URL} />;
     }
     status = error.response.status;
     message = error.message;

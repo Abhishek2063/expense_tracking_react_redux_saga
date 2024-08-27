@@ -1,4 +1,6 @@
 export const DEFAULT_STATE = {
-    getRoleData: {},
-  };
-  
+  getRoleData: {},
+  createRoleData: {},
+  updateRoleData: {},
+  deleteRoleData: {},
+};

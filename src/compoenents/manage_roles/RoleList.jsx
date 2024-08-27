@@ -1,8 +1,8 @@
-import React from 'react';
-import { Table, Button } from 'react-bootstrap';
-import { EditFilled } from '@ant-design/icons';
+import React from "react";
+import { Table, Button } from "react-bootstrap";
+import { DeleteFilled, EditFilled } from "@ant-design/icons";
 
-const RoleList = ({ roleList, onEdit }) => (
+const RoleList = ({ roleList, onEdit, onDelete }) => (
   <div className="table-responsive">
     <Table striped bordered hover>
       <thead>
@@ -21,15 +21,22 @@ const RoleList = ({ roleList, onEdit }) => (
               <td>{role?.name}</td>
               <td>{role?.description}</td>
               <td>
-                <Button onClick={() => onEdit(role)}>
-                  <EditFilled />
-                </Button>
+                <div className="d-flex gap-2">
+                  <Button onClick={() => onEdit(role)}>
+                    <EditFilled />
+                  </Button>
+                  <Button variant="danger" onClick={() => onDelete(role)}>
+                    <DeleteFilled />
+                  </Button>
+                </div>
               </td>
             </tr>
           ))
         ) : (
           <tr>
-            <td colSpan="4" className="text-center">No Role List</td>
+            <td colSpan="4" className="text-center">
+              No Role List
+            </td>
           </tr>
         )}
       </tbody>
