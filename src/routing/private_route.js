@@ -1,9 +1,10 @@
 import React from "react";
 import {
   DASHBOARD_APP_URL,
+  MANAGE_CATEGORY_APP_URL,
   MANAGE_MODULE_APP_URL,
   MANAGE_ROLE_APP_URL,
-  MANAGE_USER_APP_URL
+  MANAGE_USER_APP_URL,
 } from "../utils/app_route_list";
 
 export const DASHBOARD_APP_COMPONENT = React.lazy(() =>
@@ -17,6 +18,9 @@ export const MANAGE_ROLE_APP_COMPONENT = React.lazy(() =>
 );
 export const MANAGE_USER_APP_COMPONENT = React.lazy(() =>
   import("../pages/manage_users/ManageUser")
+);
+export const MANAGE_CATEGORY_APP_COMPONENT = React.lazy(() =>
+  import("../pages/manage_category/ManageCategory")
 );
 
 export const PrivateRoutes = [
@@ -36,5 +40,9 @@ export const PrivateRoutes = [
   {
     path: MANAGE_USER_APP_URL,
     component: <MANAGE_USER_APP_COMPONENT />,
+  },
+  {
+    path: MANAGE_CATEGORY_APP_URL,
+    component: <MANAGE_CATEGORY_APP_COMPONENT />,
   },
 ];

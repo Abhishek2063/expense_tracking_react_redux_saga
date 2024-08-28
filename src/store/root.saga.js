@@ -19,6 +19,12 @@ import {
   passwordUpdateUserWatcher,
   updateUserWatcher,
 } from "../redux/user/user.saga";
+import {
+  createCategoryWatcher,
+  deleteCategoryWatcher,
+  getCategoryWatcher,
+  updateCategoryWatcher,
+} from "../redux/category/category.saga";
 
 export function* rootSaga() {
   yield all([
@@ -36,5 +42,9 @@ export function* rootSaga() {
     updateUserWatcher(),
     deleteUserWatcher(),
     passwordUpdateUserWatcher(),
+    getCategoryWatcher(),
+    createCategoryWatcher(),
+    updateCategoryWatcher(),
+    deleteCategoryWatcher(),
   ]);
 }

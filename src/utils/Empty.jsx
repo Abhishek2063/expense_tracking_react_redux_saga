@@ -22,6 +22,7 @@ const Empty = () => {
     MANAGE_MODULE_APP_URL,
     MANAGE_ROLE_APP_URL,
     MANAGE_USER_APP_URL,
+    MANAGE_USER_APP_URL,
   ];
 
   if (~matches.indexOf(location.pathname)) {
