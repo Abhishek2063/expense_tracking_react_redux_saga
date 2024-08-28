@@ -6,6 +6,7 @@ import "../assests/css/sidebar.css";
 import {
   DASHBOARD_APP_URL,
   MANAGE_CATEGORY_APP_URL,
+  MANAGE_EXPESENS_APP_URL,
   MANAGE_MODULE_APP_URL,
   MANAGE_ROLE_APP_URL,
   MANAGE_USER_APP_URL,
@@ -28,6 +29,9 @@ const Sidebar = ({ isOpen }) => {
         </Menu.Item>
         <Menu.Item key="manage_category" icon={<AppstoreOutlined />}>
           <Link to={MANAGE_CATEGORY_APP_URL}>Manage Category</Link>
+        </Menu.Item>
+        <Menu.Item key="manage_expense" icon={<AppstoreOutlined />}>
+          <Link to={MANAGE_EXPESENS_APP_URL}>Manage Expenses</Link>
         </Menu.Item>
       </Menu>
     </div>

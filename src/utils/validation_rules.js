@@ -131,22 +131,23 @@ export const validateInputs = (type, inputText) => {
           return true;
         } else if (typeof inputText === "number") {
           return true;
-        } else if (typeof inputText === "object") {
-          return true;
-        }
+        } 
+        // else if (typeof inputText === "object") {
+        //   return true;
+        // }
         return "empty";
       }
-      case "consecsutivespace": {
-        if (inputText) {
-          const strings = /\s{3,}/;
-          if (inputText && inputText.match(strings)) {
-            return true;
-          } else {
-            return false;
-          }
-        }
-        return "empty";
-      }
+      // case "consecsutivespace": {
+      //   if (inputText) {
+      //     const strings = /\s{3,}/;
+      //     if (inputText && inputText.match(strings)) {
+      //       return true;
+      //     } else {
+      //       return false;
+      //     }
+      //   }
+      //   return "empty";
+      // }
   
       case "onlynumber": {
         if (inputText) {

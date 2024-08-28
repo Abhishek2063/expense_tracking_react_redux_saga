@@ -25,6 +25,16 @@ import {
   getCategoryWatcher,
   updateCategoryWatcher,
 } from "../redux/category/category.saga";
+import {
+  createExpenseWatcher,
+  deleteExpenseWatcher,
+  getAnnualChartWatcher,
+  getCategoryWiseChartWatcher,
+  getExpenseWatcher,
+  getMonthlyChartWatcher,
+  getTimeBasedChartWatcher,
+  updateExpenseWatcher,
+} from "../redux/expenses/expenses.saga";
 
 export function* rootSaga() {
   yield all([
@@ -46,5 +56,13 @@ export function* rootSaga() {
     createCategoryWatcher(),
     updateCategoryWatcher(),
     deleteCategoryWatcher(),
+    getExpenseWatcher(),
+    createExpenseWatcher(),
+    updateExpenseWatcher(),
+    deleteExpenseWatcher(),
+    getCategoryWiseChartWatcher(),
+    getTimeBasedChartWatcher(),
+    getAnnualChartWatcher(),
+    getMonthlyChartWatcher(),
   ]);
 }

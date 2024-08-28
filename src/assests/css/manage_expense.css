@@ -1,0 +1,19 @@
+.manage-expense h2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.manage-expense .table-responsive {
+    overflow-x: auto;
+}
+
+@media (max-width: 768px) {
+    .manage-expense .text-md-end {
+        text-align: left !important;
+    }
+}
+
+.ant-picker {
+    width: 100%;
+}

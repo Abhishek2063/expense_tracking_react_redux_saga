@@ -5,6 +5,7 @@ import { roleReducer } from "../redux/role/role.reducer";
 import { moduleReducer } from "../redux/module/module.reducer";
 import { userReducer } from "../redux/user/user.reducer";
 import { categoryReducer } from "../redux/category/category.reducer";
+import { expenseReducer } from "../redux/expenses/expenses.reducer";
 export const appReducer = combineReducers({
   signup: signupReducer,
   login: loginReducer,
@@ -12,6 +13,7 @@ export const appReducer = combineReducers({
   module: moduleReducer,
   user: userReducer,
   category: categoryReducer,
+  expense : expenseReducer
 });
 export const rootReducer = (state, action) => {
   if (action.type === "USER_LOGOUT") {

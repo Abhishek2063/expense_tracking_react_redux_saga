@@ -1,4 +1,5 @@
 // hooks/useForm.js
+import dayjs from "dayjs";
 import { useState, useCallback } from "react";
 
 const useForm = (initialState, validationRules) => {
@@ -7,9 +8,7 @@ const useForm = (initialState, validationRules) => {
 
   const validateField = useCallback(
     (name, value, allValues) => {
-      let error = validationRules[name]
-        ? validationRules[name](value, allValues)
-        : null;
+      let error = null;
 
       // Additional check for password and confirm password
       if (name === "confirm_password" || name === "password") {
@@ -24,6 +23,19 @@ const useForm = (initialState, validationRules) => {
         ) {
           error = "Passwords do not match";
         }
+      }
+
+      // Custom validation for category_id
+      if (name === "category_id" && (!value || value === "")) {
+        error = "Category is required";
+      }
+      // Custom validation for date
+      else if (name === "date" && (!value || !dayjs(value).isValid())) {
+        error = "Valid date is required";
+      } else {
+        error = validationRules[name]
+          ? validationRules[name](value, allValues)
+          : null;
       }
 
       return error;
