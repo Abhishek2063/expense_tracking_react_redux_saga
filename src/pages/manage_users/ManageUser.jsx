@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { message } from "antd";
-import { AppstoreOutlined } from "@ant-design/icons";
+import { UserOutlined } from "@ant-design/icons";
 import "../../assests/css/manage_user.css";
 import { useDispatch, useSelector } from "react-redux";
 import { fieldValidator, usePrevious } from "../../utils/custom_validation";
@@ -330,7 +330,7 @@ const ManageUser = () => {
         <Row className="mb-4">
           <Col>
             <h2>
-              <AppstoreOutlined /> Manage Users
+              <UserOutlined /> Manage Users
             </h2>
           </Col>
         </Row>

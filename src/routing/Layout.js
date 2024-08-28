@@ -18,6 +18,7 @@ export const Template = ({ children }) => {
     <div className="template-container">
       <Header toggleSidebar={toggleSidebar} />
       <div className="content-wrapper">
+        
         <Sidebar isOpen={sidebarOpen} />
         <main className="main-content">
           {children}

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { message } from "antd";
-import { AppstoreOutlined } from "@ant-design/icons";
+import { DollarOutlined } from "@ant-design/icons";
 import "../../assests/css/manage_expense.css";
 import { useDispatch, useSelector } from "react-redux";
 import { fieldValidator, usePrevious } from "../../utils/custom_validation";
@@ -21,7 +21,6 @@ import { getUserDetails } from "../../storage/user";
 import { getCategory } from "../../redux/category/category.action";
 import ExpenseCreateModal from "../../compoenents/modals/manage_expense/ExpenseCreateModal";
 import useForm from "../../hooks/useForm";
-import { format } from "date-fns";
 import dayjs from "dayjs";
 import ConfirmationPopup from "../../compoenents/ConfirmationPopup";
 
@@ -218,7 +217,6 @@ const ManageExpenses = () => {
   }, [createExpenseData, prevcreateExpenseData]);
 
   const handleEditExpense = (expense) => {
-    console.log(expense, "expense");
     const initialState = {
       category_id: parseInt(expense.category?.id),
       description: expense.description.trim() || null,
@@ -332,7 +330,7 @@ const ManageExpenses = () => {
         <Row className="mb-4">
           <Col>
             <h2>
-              <AppstoreOutlined /> Manage Expenses
+              <DollarOutlined /> Manage Expenses
             </h2>
           </Col>
         </Row>

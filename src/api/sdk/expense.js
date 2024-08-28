@@ -67,7 +67,7 @@ export async function getCategoryWiseChartApi(data) {
 export async function getTimeBasedChartApi(data) {
   let userData = data.data;
   const user_id = userData.user_id;
-  const time_frame = userData.time_frame;
+  const time_frame = userData.time_frame || "date";
 
   return request({
     url: `${EXPENSE_API_URL}/chart/time-based/${time_frame}/${user_id}`,

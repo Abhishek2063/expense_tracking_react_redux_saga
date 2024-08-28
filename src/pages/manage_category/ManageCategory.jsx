@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { message } from "antd";
-import { AppstoreOutlined } from "@ant-design/icons";
+import { FolderOpenOutlined } from "@ant-design/icons";
 import "../../assests/css/manage_category.css";
 import { useDispatch, useSelector } from "react-redux";
 import { fieldValidator, usePrevious } from "../../utils/custom_validation";
@@ -337,7 +337,7 @@ const ManageCategory = () => {
         <Row className="mb-4">
           <Col>
             <h2>
-              <AppstoreOutlined /> Manage Categories
+              <FolderOpenOutlined /> Manage Categories
             </h2>
           </Col>
         </Row>
