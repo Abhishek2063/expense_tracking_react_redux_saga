@@ -30,7 +30,7 @@ const useForm = (initialState, validationRules) => {
         error = "Category is required";
       }
       // Custom validation for date
-      else if (name === "date" && (!value || !dayjs(value).isValid())) {
+      else if (name === "date" && (!value)) {
         error = "Valid date is required";
       } else {
         error = validationRules[name]

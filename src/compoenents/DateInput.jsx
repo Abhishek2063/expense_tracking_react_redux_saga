@@ -28,7 +28,6 @@ const DateInput = ({
       <DatePicker
         style={{ width: "100%" }}
         name={name}
-        defaultValue={value ? new Date(value) : null}
         format="MM-DD-YYYY"
         onChange={(date) => handleDateChange(date)}
         disabledDate={(current) =>

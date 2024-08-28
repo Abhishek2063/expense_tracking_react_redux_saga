@@ -9,7 +9,9 @@ import Loader from "../../compoenents/Loader";
 import _ from "lodash";
 import {
   createExpense,
+  deleteExpense,
   getExpense,
+  updateExpense,
 } from "../../redux/expenses/expenses.action";
 import FilterControls from "../../compoenents/FilterControls";
 import ExpenseList from "../../compoenents/manage_expense/ExpenseList";
@@ -21,6 +23,7 @@ import ExpenseCreateModal from "../../compoenents/modals/manage_expense/ExpenseC
 import useForm from "../../hooks/useForm";
 import { format } from "date-fns";
 import dayjs from "dayjs";
+import ConfirmationPopup from "../../compoenents/ConfirmationPopup";
 
 const SortByFilterDropdown = [
   { name: "Latest", value: "created_at" },
@@ -182,7 +185,7 @@ const ManageExpenses = () => {
       category_id: parseInt(formData.category_id),
       description: formData.description.trim() || null,
       amount: parseFloat(formData.amount),
-      date: dayjs(formData.date).format('YYYY-MM-DD'),
+      date: dayjs(formData.date).format("YYYY-MM-DD"),
     };
     dispatch(createExpense(data));
   };
@@ -213,6 +216,115 @@ const ManageExpenses = () => {
       }
     } // eslint-disable-next-line
   }, [createExpenseData, prevcreateExpenseData]);
+
+  const handleEditExpense = (expense) => {
+    console.log(expense, "expense");
+    const initialState = {
+      category_id: parseInt(expense.category?.id),
+      description: expense.description.trim() || null,
+      amount: parseFloat(expense.amount),
+      date: new Date(expense.date),
+    };
+    setValues(initialState);
+    SetSelectedExpenseId(expense?.id);
+    setShowEditModal(true);
+  };
+
+  const handleCloseEditModal = () => {
+    setShowEditModal(false);
+    reset();
+  };
+
+  const onUpdateSubmit = (formData) => {
+    setLoader(true);
+    const data = {
+      user_id: userData?.id,
+      expense_id: selectedExpenseId,
+      category_id: parseInt(formData.category_id),
+      description: formData.description.trim() || null,
+      amount: parseFloat(formData.amount),
+      date: dayjs(formData.date).format("YYYY-MM-DD"),
+    };
+    setShowEditModal(false);
+
+    dispatch(updateExpense(data));
+  };
+
+  const updateExpenseData = useSelector(
+    (state) => state.expense.updateExpenseData
+  );
+  const prevupdateExpenseData = usePrevious({ updateExpenseData });
+
+  useEffect(() => {
+    if (
+      prevupdateExpenseData &&
+      prevupdateExpenseData.updateExpenseData !== updateExpenseData
+    ) {
+      if (
+        updateExpenseData &&
+        _.has(updateExpenseData, "data") &&
+        updateExpenseData.success === true
+      ) {
+        message.success(updateExpenseData.message);
+        fetchAllExpenses({ sort_by: sortBy, order: sortOrder, skip });
+        setShowModal(false);
+      }
+      if (updateExpenseData && updateExpenseData.success === false) {
+        setLoader(false);
+        message.error(updateExpenseData.message);
+        setShowModal(false);
+      }
+    } // eslint-disable-next-line
+  }, [updateExpenseData, prevupdateExpenseData]);
+
+  const handleDeleteExpense = (expense) => {
+    setExpenseToDelete(expense);
+    setIsDeleteConfirmVisible(true);
+  };
+
+  const handleDeleteCancel = () => {
+    setIsDeleteConfirmVisible(false);
+    setExpenseToDelete(null);
+  };
+
+  const handleDeleteConfirm = () => {
+    setLoader(true);
+
+    setIsDeleteConfirmVisible(false);
+
+    dispatch(
+      deleteExpense({
+        expense_id: expenseToDelete.id,
+      })
+    );
+  };
+
+  const deleteExpenseData = useSelector(
+    (state) => state.expense.deleteExpenseData
+  );
+  const prevdeleteExpenseData = usePrevious({ deleteExpenseData });
+
+  useEffect(() => {
+    if (
+      prevdeleteExpenseData &&
+      prevdeleteExpenseData.deleteExpenseData !== deleteExpenseData
+    ) {
+      if (
+        deleteExpenseData &&
+        _.has(deleteExpenseData, "data") &&
+        deleteExpenseData.success === true
+      ) {
+        message.success(deleteExpenseData.message);
+        fetchAllExpenses({ sort_by: sortBy, order: sortOrder, skip });
+        setShowModal(false);
+      }
+      if (deleteExpenseData && deleteExpenseData.success === false) {
+        setLoader(false);
+        message.error(deleteExpenseData.message);
+        setShowModal(false);
+      }
+    } // eslint-disable-next-line
+  }, [deleteExpenseData, prevdeleteExpenseData]);
 
   return (
     <>
@@ -247,8 +359,8 @@ const ManageExpenses = () => {
           <Col>
             <ExpenseList
               expenseList={expenseList}
-              onEdit={null}
-              onDelete={null}
+              onEdit={handleEditExpense}
+              onDelete={handleDeleteExpense}
             />
           </Col>
         </Row>
@@ -274,6 +386,27 @@ const ManageExpenses = () => {
         handleSubmit={handleSubmit(onSubmit)}
         categoryList={categoryList}
         setValues={setValues}
+      />
+      <ExpenseCreateModal
+        modal_title="Edit Expense"
+        modalOpen={showEditModal}
+        handleClose={handleCloseEditModal}
+        values={values}
+        errors={errors}
+        handleChange={handleChange}
+        handleSubmit={handleSubmit(onUpdateSubmit)}
+        categoryList={categoryList}
+        setValues={setValues}
+      />
+
+      <ConfirmationPopup
+        isVisible={isDeleteConfirmVisible}
+        onConfirm={handleDeleteConfirm}
+        onCancel={handleDeleteCancel}
+        title="Confirm Delete"
+        content={`Are you sure you want to delete the expense ?`}
+        confirmText="Delete"
+        cancelText="Cancel"
       />
 
       {loader && <Loader />}
