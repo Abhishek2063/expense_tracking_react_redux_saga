@@ -10,17 +10,21 @@ import {
   CREATE_MODULE,
   ERROR_CREATE_MODULE,
   ERROR_GET_ALL_MODULE,
+  ERROR_GET_ALL_MODULE_ROUTE,
   ERROR_UPDATE_MODULE,
   ERROR_UPDATE_MODULE_PERMISSION,
   GET_ALL_MODULE,
+  GET_ALL_MODULE_ROUTE,
   SUCCESS_CREATE_MODULE,
   SUCCESS_GET_ALL_MODULE,
+  SUCCESS_GET_ALL_MODULE_ROUTE,
   SUCCESS_UPDATE_MODULE,
   SUCCESS_UPDATE_MODULE_PERMISSION,
   UPDATE_MODULE,
   UPDATE_MODULE_PERMISSION,
   createModuleResponse,
   getAllModuleResponse,
+  getAllModuleResponseRoute,
   updateModulePermissionResponse,
   updateModuleResponse,
 } from "./module.action";
@@ -85,4 +89,18 @@ function* updateModuleRequest(data) {
 }
 export function* updateModuleWatcher() {
   yield takeLatest(UPDATE_MODULE, updateModuleRequest);
+}
+
+
+// getAllModuleRoute
+function* getAllModuleRouteRequest(data) {
+  let getData = yield getModuleApi(data);
+  if (getData.success && _.has(getData, "data.data")) {
+    yield put(getAllModuleResponseRoute(SUCCESS_GET_ALL_MODULE_ROUTE, getData.data));
+  } else {
+    yield put(getAllModuleResponseRoute(ERROR_GET_ALL_MODULE_ROUTE, getData.data));
+  }
+}
+export function* getAllModuleRouteWatcher() {
+  yield takeLatest(GET_ALL_MODULE_ROUTE, getAllModuleRouteRequest);
 }

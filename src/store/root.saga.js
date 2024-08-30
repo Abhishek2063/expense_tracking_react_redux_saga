@@ -9,6 +9,7 @@ import {
 } from "../redux/role/role.saga";
 import {
   createModuleWatcher,
+  getAllModuleRouteWatcher,
   getAllModuleWatcher,
   updateModulePermissionWatcher,
   updateModuleWatcher,
@@ -64,5 +65,6 @@ export function* rootSaga() {
     getTimeBasedChartWatcher(),
     getAnnualChartWatcher(),
     getMonthlyChartWatcher(),
+    getAllModuleRouteWatcher(),
   ]);
 }

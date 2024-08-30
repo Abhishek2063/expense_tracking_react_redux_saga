@@ -29,3 +29,9 @@ export const updateModule = (data) => ({ type: UPDATE_MODULE, data });
 export const SUCCESS_UPDATE_MODULE = "SUCCESS_UPDATE_MODULE";
 export const ERROR_UPDATE_MODULE = "ERROR_UPDATE_MODULE";
 export const updateModuleResponse = (type, data) => ({ type, data });
+
+export const GET_ALL_MODULE_ROUTE = "GET_ALL_MODULE_ROUTE";
+export const getAllModuleRoute = (data) => ({ type: GET_ALL_MODULE_ROUTE, data });
+export const SUCCESS_GET_ALL_MODULE_ROUTE = "SUCCESS_GET_ALL_MODULE_ROUTE";
+export const ERROR_GET_ALL_MODULE_ROUTE = "ERROR_GET_ALL_MODULE_ROUTE";
+export const getAllModuleResponseRoute = (type, data) => ({ type, data });

@@ -11,7 +11,7 @@ import _ from "lodash";
 import { getUserDetails } from "../../storage/user";
 import {
   createModule,
-  getAllModule,
+  getAllModuleRoute,
   updateModule,
   updateModulePermission,
 } from "../../redux/module/module.action";
@@ -62,7 +62,7 @@ const ManageModules = () => {
     setSelectedRoleId(role_id);
     setLoader(true);
     dispatch(
-      getAllModule({
+      getAllModuleRoute({
         role_id: role_id,
       })
     );
@@ -97,31 +97,36 @@ const ManageModules = () => {
     } // eslint-disable-next-line
   }, [getRoleData, prevgetRoleData]);
 
-  const getAllModuleData = useSelector(
-    (state) => state.module.getAllModuleData
+  const getAllModuleRouteData = useSelector(
+    (state) => state.module.getAllModuleRouteData
   );
-  const prevgetAllModuleData = usePrevious({ getAllModuleData });
+  const prevgetAllModuleRouteData = usePrevious({ getAllModuleRouteData });
 
   useEffect(() => {
     if (
-      prevgetAllModuleData &&
-      prevgetAllModuleData.getAllModuleData !== getAllModuleData
+      prevgetAllModuleRouteData &&
+      prevgetAllModuleRouteData.getAllModuleRouteData !== getAllModuleRouteData
     ) {
       if (
-        getAllModuleData &&
-        _.has(getAllModuleData, "data") &&
-        getAllModuleData.success === true
+        getAllModuleRouteData &&
+        _.has(getAllModuleRouteData, "data") &&
+        getAllModuleRouteData.success === true
       ) {
-        message.success(getAllModuleData.message);
-        setModuleListData(getAllModuleData?.data?.modules);
+        message.success(getAllModuleRouteData.message);
+        // Filter the modules based on permission
+        const modulesWithPermission =
+          getAllModuleRouteData?.data?.modules.filter(
+            (module) => module.has_permission
+          );
+        setModuleListData(modulesWithPermission);
         setLoader(false);
       }
-      if (getAllModuleData && getAllModuleData.success === false) {
+      if (getAllModuleRouteData && getAllModuleRouteData.success === false) {
         setLoader(false);
-        message.error(getAllModuleData.message);
+        message.error(getAllModuleRouteData.message);
       }
     } // eslint-disable-next-line
-  }, [getAllModuleData, prevgetAllModuleData]);
+  }, [getAllModuleRouteData, prevgetAllModuleRouteData]);
 
   const onSubmit = (formData) => {
     setLoader(true);

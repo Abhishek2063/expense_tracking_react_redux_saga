@@ -3,4 +3,5 @@ export const DEFAULT_STATE = {
   createModuleData: {},
   updateModulePermissionData: {},
   updateModuleData: {},
+  getAllModuleRouteData: {},
 };
