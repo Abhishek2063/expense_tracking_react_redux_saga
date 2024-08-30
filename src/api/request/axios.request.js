@@ -15,9 +15,11 @@ export const request = async (config) => {
   let response;
   try {
     response = await axios.request(requestData);
-    if (response?.data?.status_code === 401) {
-      removeLocalData();
-      <Navigate to={LOGIN_APP_URL} />;
+    if (
+      response?.data?.status_code === 401 &&
+      response?.data?.message === "The authorization token has expired."
+    ) {
+      return UnAuthorized();
     }
   } catch (error) {
     return createResponseFromAxiosError(error);
@@ -26,6 +28,10 @@ export const request = async (config) => {
   return createResponseFromAxiosResponse(response);
 };
 
+function UnAuthorized() {
+  removeLocalData();
+  <Navigate to={LOGIN_APP_URL} />;
+}
 function createResponseFromAxiosError(error) {
   // handle  error
   let status, message, data;

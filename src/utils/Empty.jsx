@@ -33,7 +33,6 @@ const Empty = () => {
       })
     );
   };
-
   useEffect(() => {
     if (userData) {
       fetchAllModules(userData?.role?.id);
@@ -93,7 +92,6 @@ const Empty = () => {
       return ~matches.indexOf(linkNameToCheck);
     }
   }
-
   if (checkLinkPermission(location.pathname)) {
     return <div> {loader && <Loader />}</div>;
   } else {
