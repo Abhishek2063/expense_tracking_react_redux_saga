@@ -1,10 +1,12 @@
 import {
   ERROR_CREATE_MODULE,
   ERROR_GET_ALL_MODULE,
+  ERROR_GET_ALL_MODULE_ROUTE,
   ERROR_UPDATE_MODULE,
   ERROR_UPDATE_MODULE_PERMISSION,
   SUCCESS_CREATE_MODULE,
   SUCCESS_GET_ALL_MODULE,
+  SUCCESS_GET_ALL_MODULE_ROUTE,
   SUCCESS_UPDATE_MODULE,
   SUCCESS_UPDATE_MODULE_PERMISSION,
 } from "./module.action";
@@ -48,6 +50,13 @@ export const moduleReducer = (
     case ERROR_UPDATE_MODULE:
       const errorupdateModuleData = action.data;
       return { ...state, updateModuleData: errorupdateModuleData };
+
+    case SUCCESS_GET_ALL_MODULE_ROUTE:
+      const getAllModuleRouteData = action.data;
+      return { ...state, getAllModuleRouteData };
+    case ERROR_GET_ALL_MODULE_ROUTE:
+      const errorgetAllModuleRouteData = action.data;
+      return { ...state, getAllModuleRouteData: errorgetAllModuleRouteData };
 
     default:
       return state;
