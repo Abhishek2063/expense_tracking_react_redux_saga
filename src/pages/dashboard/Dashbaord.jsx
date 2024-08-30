@@ -185,7 +185,7 @@ const Dashbaord = () => {
 
   const handleTimeFrameChange = (value) => {
     setTimeFrame(value);
-    dispatch(getTimeBasedChart({ user_id: userData?.id, timeframe: value }));
+    dispatch(getTimeBasedChart({ user_id: userData?.id, time_frame: value }));
   };
 
   const handleYearChange = (value) => {
@@ -229,6 +229,7 @@ const Dashbaord = () => {
           <TimeBasedChart
             data={getTimeBasedChartDataState}
             chartType={timeChartType}
+            timeFrame={timeFrame}
           />
         </div>
 

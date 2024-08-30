@@ -282,7 +282,7 @@ const ManageUser = () => {
 
   const handleDeleteCancel = () => {
     setIsDeleteConfirmVisible(false);
-    fetchAllUser(null);
+    setuserToDelete(null);
   };
 
   const handleDeleteConfirm = () => {
